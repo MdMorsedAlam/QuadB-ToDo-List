@@ -9,6 +9,7 @@ const taskSlice = createSlice({
   name: "tasks",
   initialState,
   reducers: {
+    // Add Task To Redux And LocalStorage
     addTask: (state, { payload }) => {
       if (state.tasks.length === 0) {
         state.tasks.push({ id: 1, ...payload });
@@ -24,6 +25,7 @@ const taskSlice = createSlice({
         localStorage.setItem("tasksData", storeTask);
       }
     },
+    // Remove Single Task From Redux And LocalStorage
     removeSingleTask: (state, { payload }) => {
       state.tasks = state.tasks.filter((item) => item.id !== payload);
       const tasksListString = localStorage.getItem("tasksData");
@@ -32,6 +34,7 @@ const taskSlice = createSlice({
       const updatedTasksListString = JSON.stringify(updatedTasksList);
       localStorage.setItem("tasksData", updatedTasksListString);
     },
+    // Remove Multiple Task From Redux And LocalStorage
     removeMultipleTasks: (state, { payload }) => {
       state.tasks = state.tasks.filter((item) => !payload.includes(item.id));
       const tasksListString = localStorage.getItem("tasksData");

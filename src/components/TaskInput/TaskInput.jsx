@@ -3,7 +3,9 @@ import { useDispatch } from "react-redux";
 import { addTask } from "../../redux/features/tasks/taskSlice";
 
 const TaskInput = () => {
+  // dispatch use For Redux Oparations
   const dispatch = useDispatch();
+  // This Function Use For Submit Data To Redux
   const handelSubmit = (e) => {
     e.preventDefault();
     const taskName = e.target.name.value;
