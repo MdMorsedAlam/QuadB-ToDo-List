@@ -7,7 +7,10 @@ import CommentIcon from "@mui/icons-material/Comment";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Button, Tooltip, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { removeSingleTask } from "../../redux/features/tasks/taskSlice";
+import {
+  removeMultipleTasks,
+  removeSingleTask,
+} from "../../redux/features/tasks/taskSlice";
 import TaskDetails from "./TaskDetails";
 
 const TaskList = () => {
@@ -33,6 +36,10 @@ const TaskList = () => {
     setTaskId(id);
     setOpen(true);
   };
+  const handelMultipleDelete = () => {
+    dispatch(removeMultipleTasks(checked));
+    setChecked([]);
+  };
 
   return (
     <Box
@@ -42,58 +49,87 @@ const TaskList = () => {
         justifyContent: "center",
       }}
     >
-      <List
+      <Box
         sx={{
           width: "100%",
           maxWidth: 500,
           border: "1px solid #1976D2",
-          padding: 8,
+          padding: 5,
           borderRadius: "8px",
           bgcolor: "background.paper",
         }}
       >
-        {tasks.map((task) => (
-          <ListItem key={task}>
-            <ListItemButton
-              sx={{ display: "flex", justifyContent: "space-between" }}
-              role={undefined}
-              onClick={handleToggle(task)}
-              dense
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 2,
-                  justifyItems: "center",
-                  alignItems: "center",
-                }}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            justifyItems: "center",
+          }}
+        >
+          <Typography>
+            {checked.length > 0 ? `${checked.length} Item Selected` : ""}
+          </Typography>
+          <Button
+            disabled={checked.length < 2}
+            variant="outlined"
+            color="error"
+            startIcon={<DeleteIcon />}
+            onClick={handelMultipleDelete}
+          >
+            Delete
+          </Button>
+        </Box>
+        <List
+          sx={{
+            paddingY: 2,
+          }}
+        >
+          {tasks.map((task) => (
+            <ListItem key={task.id}>
+              <ListItemButton
+                sx={{ display: "flex", justifyContent: "space-between" }}
+                role={undefined}
+                onClick={handleToggle(task.id)}
+                dense
               >
-                <Checkbox
-                  edge="start"
-                  checked={checked.indexOf(task) !== -1}
-                  tabIndex={-1}
-                  disableRipple
-                />
-                <Typography>{task.taskName}</Typography>
-              </Box>
-              <Box>
-                <Button onClick={() => handelSingleTask(task.id)}>
-                  <Tooltip title="View" placement="top">
-                    <CommentIcon />
-                  </Tooltip>
-                </Button>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 2,
+                    justifyItems: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Checkbox
+                    edge="start"
+                    checked={checked.indexOf(task.id) !== -1}
+                    tabIndex={-1}
+                    disableRipple
+                  />
+                  <Typography>{task.taskName}</Typography>
+                </Box>
+                <Box>
+                  <Button onClick={() => handelSingleTask(task.id)}>
+                    <Tooltip title="View" placement="top">
+                      <CommentIcon />
+                    </Tooltip>
+                  </Button>
 
-                <Button onClick={() => dispatch(removeSingleTask(task.id))}>
-                  <Tooltip title="Delete" placement="top">
-                    <DeleteIcon />
-                  </Tooltip>
-                </Button>
-                <TaskDetails setOpen={setOpen} open={open} taskId={taskId} />
-              </Box>
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+                  <Button
+                    color="error"
+                    onClick={() => dispatch(removeSingleTask(task.id))}
+                  >
+                    <Tooltip title="Delete" placement="top">
+                      <DeleteIcon />
+                    </Tooltip>
+                  </Button>
+                  <TaskDetails setOpen={setOpen} open={open} taskId={taskId} />
+                </Box>
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Box>
     </Box>
   );
 };

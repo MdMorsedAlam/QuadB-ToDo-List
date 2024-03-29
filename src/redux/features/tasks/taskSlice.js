@@ -32,7 +32,18 @@ const taskSlice = createSlice({
       const updatedTasksListString = JSON.stringify(updatedTasksList);
       localStorage.setItem("tasksData", updatedTasksListString);
     },
+    removeMultipleTasks: (state, { payload }) => {
+      state.tasks = state.tasks.filter((item) => !payload.includes(item.id));
+      const tasksListString = localStorage.getItem("tasksData");
+      const tasksList = JSON.parse(tasksListString);
+      const updatedTasksList = tasksList.filter(
+        (item) => !payload.includes(item.id)
+      );
+      const updatedTasksListString = JSON.stringify(updatedTasksList);
+      localStorage.setItem("tasksData", updatedTasksListString);
+    },
   },
 });
-export const { addTask, removeSingleTask } = taskSlice.actions;
+export const { addTask, removeSingleTask, removeMultipleTasks } =
+  taskSlice.actions;
 export default taskSlice.reducer;
