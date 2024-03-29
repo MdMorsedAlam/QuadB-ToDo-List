@@ -26,13 +26,20 @@ const TaskList = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", marginTop: "20px", justifyContent: "center" }}>
+    <Box
+      sx={{
+        display: "flex",
+        marginTop: "20px",
+        justifyContent: "center",
+      }}
+    >
       <List
         sx={{
           width: "100%",
           maxWidth: 500,
           border: "1px solid green",
           padding: 8,
+          borderRadius: "8px",
           bgcolor: "background.paper",
         }}
       >

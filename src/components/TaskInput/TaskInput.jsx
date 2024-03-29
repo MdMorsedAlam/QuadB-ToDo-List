@@ -4,16 +4,33 @@ const TaskInput = () => {
   const handelSubmit = (e) => {
     e.preventDefault();
     const taskName = e.target.name.value;
-    console.log(taskName);
+    const taskDes = e.target.des.value;
+    console.log(taskName, taskDes);
 
     e.target.reset();
   };
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
       <form onSubmit={handelSubmit}>
-        <Box sx={{ display: "flex", gap: 4, justifyItems: "center" }}>
-          <TextField label="Name" name="name" type="text" />
-          <Button type="submit" variant="outlined">
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            justifyItems: "center",
+          }}
+        >
+          <TextField sx={{ width: 500 }} label="Name" name="name" type="text" />
+
+          <TextField
+            sx={{ width: 500 }}
+            label="Description"
+            name="des"
+            multiline
+            rows={3}
+          />
+
+          <Button sx={{ width: 100 }} type="submit" variant="outlined">
             Add
           </Button>
         </Box>
