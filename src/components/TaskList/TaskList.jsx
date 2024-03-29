@@ -6,13 +6,16 @@ import Checkbox from "@mui/material/Checkbox";
 import CommentIcon from "@mui/icons-material/Comment";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Button, Tooltip, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { removeSingleTask } from "../../redux/features/tasks/taskSlice";
+import TaskDetails from "./TaskDetails";
 
 const TaskList = () => {
   const [checked, setChecked] = React.useState([]);
   const { tasks } = useSelector((state) => state.tasksSlice);
-
-  console.log(checked);
+  const [open, setOpen] = React.useState(false);
+  const [taskId, setTaskId] = React.useState(0);
+  const dispatch = useDispatch();
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
@@ -24,6 +27,11 @@ const TaskList = () => {
     }
 
     setChecked(newChecked);
+  };
+
+  const handelSingleTask = (id) => {
+    setTaskId(id);
+    setOpen(true);
   };
 
   return (
@@ -69,17 +77,18 @@ const TaskList = () => {
                 <Typography>{task.taskName}</Typography>
               </Box>
               <Box>
-                <Button>
+                <Button onClick={() => handelSingleTask(task.id)}>
                   <Tooltip title="View" placement="top">
                     <CommentIcon />
                   </Tooltip>
                 </Button>
 
-                <Button>
+                <Button onClick={() => dispatch(removeSingleTask(task.id))}>
                   <Tooltip title="Delete" placement="top">
                     <DeleteIcon />
                   </Tooltip>
                 </Button>
+                <TaskDetails setOpen={setOpen} open={open} taskId={taskId} />
               </Box>
             </ListItemButton>
           </ListItem>
