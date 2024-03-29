@@ -36,7 +36,7 @@ const TaskList = () => {
 
     setChecked(newChecked);
   };
-// This Function Use For Show Details
+  // This Function Use For Show Details
   const handelShowSingleTask = (id) => {
     setTaskId(id);
     setOpen(true);
@@ -96,7 +96,6 @@ const TaskList = () => {
                 <ListItemButton
                   sx={{ display: "flex", justifyContent: "space-between" }}
                   role={undefined}
-                  onClick={handleToggle(task.id)}
                   dense
                 >
                   <Box
@@ -111,6 +110,7 @@ const TaskList = () => {
                       edge="start"
                       checked={checked.indexOf(task.id) !== -1}
                       tabIndex={-1}
+                      onClick={handleToggle(task.id)}
                       disableRipple
                     />
                     <Typography>{task.taskName}</Typography>
