@@ -52,12 +52,12 @@ const TaskList = () => {
           bgcolor: "background.paper",
         }}
       >
-        {tasks.map((task, i) => (
-          <ListItem key={i}>
+        {tasks.map((task) => (
+          <ListItem key={task}>
             <ListItemButton
               sx={{ display: "flex", justifyContent: "space-between" }}
               role={undefined}
-              onClick={handleToggle(i + 1)}
+              onClick={handleToggle(task)}
               dense
             >
               <Box
