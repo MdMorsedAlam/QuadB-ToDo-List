@@ -2,16 +2,17 @@ import * as React from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
 import CommentIcon from "@mui/icons-material/Comment";
-import { Box } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Box, Button, Tooltip, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const TaskList = () => {
-  const [checked, setChecked] = React.useState([0]);
+  const [checked, setChecked] = React.useState([]);
+  const { tasks } = useSelector((state) => state.tasksSlice);
 
+  console.log(checked);
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
@@ -37,44 +38,52 @@ const TaskList = () => {
         sx={{
           width: "100%",
           maxWidth: 500,
-          border: "1px solid green",
+          border: "1px solid #1976D2",
           padding: 8,
           borderRadius: "8px",
           bgcolor: "background.paper",
         }}
       >
-        {[0, 1, 2, 3].map((value) => {
-          const labelId = `checkbox-list-label-${value}`;
-
-          return (
-            <ListItem
-              key={value}
-              secondaryAction={
-                <IconButton edge="end" aria-label="comments">
-                  <CommentIcon />
-                </IconButton>
-              }
-              disablePadding
+        {tasks.map((task, i) => (
+          <ListItem key={i}>
+            <ListItemButton
+              sx={{ display: "flex", justifyContent: "space-between" }}
+              role={undefined}
+              onClick={handleToggle(i + 1)}
+              dense
             >
-              <ListItemButton
-                role={undefined}
-                onClick={handleToggle(value)}
-                dense
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 2,
+                  justifyItems: "center",
+                  alignItems: "center",
+                }}
               >
-                <ListItemIcon>
-                  <Checkbox
-                    edge="start"
-                    checked={checked.indexOf(value) !== -1}
-                    tabIndex={-1}
-                    disableRipple
-                    inputProps={{ "aria-labelledby": labelId }}
-                  />
-                </ListItemIcon>
-                <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
-              </ListItemButton>
-            </ListItem>
-          );
-        })}
+                <Checkbox
+                  edge="start"
+                  checked={checked.indexOf(task) !== -1}
+                  tabIndex={-1}
+                  disableRipple
+                />
+                <Typography>{task.taskName}</Typography>
+              </Box>
+              <Box>
+                <Button>
+                  <Tooltip title="View" placement="top">
+                    <CommentIcon />
+                  </Tooltip>
+                </Button>
+
+                <Button>
+                  <Tooltip title="Delete" placement="top">
+                    <DeleteIcon />
+                  </Tooltip>
+                </Button>
+              </Box>
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
     </Box>
   );

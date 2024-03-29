@@ -1,11 +1,15 @@
 import { Box, Button, TextField } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { addTask } from "../../redux/features/tasks/taskSlice";
 
 const TaskInput = () => {
+  const dispatch = useDispatch();
   const handelSubmit = (e) => {
     e.preventDefault();
     const taskName = e.target.name.value;
     const taskDes = e.target.des.value;
-    console.log(taskName, taskDes);
+    const taskData = { taskName, taskDes };
+    dispatch(addTask(taskData));
 
     e.target.reset();
   };
