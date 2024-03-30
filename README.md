@@ -1,4 +1,5 @@
 # To Do List
+
 ## QuadB Tech
 
 
@@ -7,3 +8,15 @@
 - Clone The Main Code 
 - Put The Commend (npm instell)
 - For Run The Application Comment (npm run dev)
+
+# Used Tech
+
+- ReactJs
+- Material UI
+- Redux
+
+# Extra Used
+
+- Local Storage
+- Props Types
+- React-spring

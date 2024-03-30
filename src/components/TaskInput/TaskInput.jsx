@@ -26,10 +26,15 @@ const TaskInput = () => {
             justifyItems: "center",
           }}
         >
-          <TextField sx={{ width: 500 }} label="Name" name="name" type="text" />
+          <TextField
+            sx={{ width: { xs: 300, sm: 500 } }}
+            label="Name"
+            name="name"
+            type="text"
+          />
 
           <TextField
-            sx={{ width: 500 }}
+            sx={{ width: { xs: 300, sm: 500 } }}
             label="Description"
             name="des"
             multiline
